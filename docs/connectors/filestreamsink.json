@@ -1,0 +1,10 @@
+{
+  "name": "output-connector",
+  "config": {
+    "connector.class": "FileStreamSink",
+    "tasks.max": 1,
+    "file": "/tmp/test-out.txt",
+    "topics": "connect-test-out",
+    "value.converter":"org.apache.kafka.connect.storage.StringConverter"
+  }
+}
