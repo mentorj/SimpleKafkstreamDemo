@@ -3,16 +3,16 @@ package com.javaxpert.demos.lbp.streams;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
+
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+
 
 /**
  * Simple demo for the Kafka Streams API
@@ -29,8 +29,11 @@ public class SimpleStreamDemo {
         }
         final StreamsBuilder builder = new StreamsBuilder();
         builder.stream("connect-test", Consumed.with(Serdes.String(), Serdes.String()))
-                .filter((name,msg) -> msg.toLowerCase(Locale.ROOT).trim().contains("test"))
-
+                .filter((name,msg) -> {
+                    boolean containsTest = msg.toLowerCase().trim().contains("test");
+                    System.out.println("test contained in msg ?" + containsTest + " input = "+ msg);
+                    return containsTest;
+                })
                 .to("connect-test-out",
                         Produced.with(Serdes.String(),Serdes.String())
                 );
