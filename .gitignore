@@ -1,3 +1,7 @@
 /LBPKafkaStreamsDemo.iml
 /target/
-.idea/
+.idea/*
+.classpath
+.project
+.settings/*
+
